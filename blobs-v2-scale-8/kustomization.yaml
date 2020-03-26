@@ -1,3 +1,4 @@
+namespace: blobs-v2
 bases:
 - ../base
 patchesStrategicMerge:

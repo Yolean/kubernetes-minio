@@ -1,0 +1,5 @@
+namespace: ystack
+bases:
+- ../base
+patchesStrategicMerge:
+- minio-scale1.yaml

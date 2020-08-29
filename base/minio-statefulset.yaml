@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: minio
-        image: minio/minio:RELEASE.2020-08-13T02-39-50Z@sha256:515828f530ec817aba52ba7994dcbf294a243043d3adcfd382d312a3096664f3
+        image: minio/minio:RELEASE.2020-08-27T05-16-20Z@sha256:0c406a33950e95a178823ce40040a6dbd008df47d4b23ede986e1e13d56ef2cd
         args:
         - server
         env:

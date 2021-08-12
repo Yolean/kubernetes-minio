@@ -31,16 +31,16 @@ spec:
           value: public
         - name: MINIO_BROWSER
           value: "off"
-        - name: MINIO_ACCESS_KEY
+        - name: MINIO_ROOT_USER
           valueFrom:
             secretKeyRef:
               name: minio
-              key: accesskey
-        - name: MINIO_SECRET_KEY
+              key: rootuser
+        - name: MINIO_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: minio
-              key: secretkey
+              key: rootpassword
         ports:
         - containerPort: 9000
           protocol: TCP

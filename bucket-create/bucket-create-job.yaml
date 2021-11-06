@@ -8,6 +8,9 @@ spec:
       annotations:
         buckets: >-
           testbucket001
+        public: >-
+          upload
+          download
     spec:
       containers:
       - name: mc
@@ -33,6 +36,10 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.annotations['buckets']
+        - name: PUBLIC
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['public']
         command:
         - /bin/sh
         - -cex
@@ -42,6 +49,16 @@ spec:
           mc --no-color config host add minio $MINIO_HOST $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD
           for BUCKET in $BUCKETS; do
             mc --no-color stat minio/$BUCKET || mc --no-color mb minio/$BUCKET
+            for POLICY in $PUBLIC; do
+              if [ "upload" = "$POLICY" ]; then
+                mc --no-color policy list minio/$BUCKET | grep '/* => writedonly' || \
+                  mc --no-color policy set upload minio/$BUCKET
+              fi
+              if [ "download" = "$POLICY" ]; then
+                mc --no-color policy list minio/$BUCKET | grep '/* => readonly' || \
+                  mc --no-color policy set download minio/$BUCKET
+              fi
+            done
             mc --no-color ls minio/$BUCKET
           done
       restartPolicy: Never

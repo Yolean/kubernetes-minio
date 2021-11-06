@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bucket-create
+spec:
+  template:
+    metadata:
+      annotations:
+        buckets: >-
+          testbucket001
+    spec:
+      containers:
+      - name: mc
+        image: minio/mc
+        env:
+        - name: MINIO_HOST
+          value: http://minio:9000
+        - name: MINIO_ROOT_USER
+          valueFrom:
+            secretKeyRef:
+              name: minio
+              key: rootuser
+              optional: true
+        - name: MINIO_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: minio
+              key: rootpassword
+              optional: true
+        - name: SQS_ARN
+          #value: arn:minio:sqs::_:kafka
+        - name: BUCKETS
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['buckets']
+        command:
+        - /bin/sh
+        - -cex
+        - |
+          [ -n "$MINIO_ROOT_USER" ] || MINIO_ROOT_USER=minioadmin
+          [ -n "$MINIO_ROOT_PASSWORD" ] || MINIO_ROOT_PASSWORD=minioadmin
+          mc --no-color config host add minio $MINIO_HOST $MINIO_ROOT_USER $MINIO_ROOT_PASSWORD
+          for BUCKET in $BUCKETS; do
+            mc --no-color stat minio/$BUCKET || mc --no-color mb minio/$BUCKET
+            mc --no-color ls minio/$BUCKET
+          done
+      restartPolicy: Never
+  backoffLimit: 5

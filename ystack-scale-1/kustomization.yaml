@@ -5,6 +5,3 @@ namespace: ystack
 
 resources:
 - ../legacyuser
-
-patchesStrategicMerge:
-- minio-scale1.yaml

@@ -7,3 +7,4 @@ resources:
 
 patchesStrategicMerge:
 - minio-standalone.yaml
+- auth-default-insecure.yaml

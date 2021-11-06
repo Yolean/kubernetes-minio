@@ -16,13 +16,3 @@ spec:
           valueFrom:
             secretKeyRef:
               optional: true
-        - name: MINIO_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: minio
-              key: accesskey
-        - name: MINIO_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: minio
-              key: secretkey

@@ -3,5 +3,8 @@ kind: Kustomization
 
 namespace: ystack
 
-resources:
+components:
 - ../legacyuser
+
+resources:
+- ../standalone

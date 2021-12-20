@@ -4,7 +4,7 @@ kind: Kustomization
 images:
 - name: minio/minio
   newName: docker.io/minio/minio
-  newTag: RELEASE.2021-11-09T03-21-45Z@sha256:8280c3910b43aeafc0ceabde28aaf2346575d4003cf2dec955a22d7cd5e94c55
+  newTag: RELEASE.2021-12-18T04-42-33Z
 
 resources:
 - minio-hl-svc.yaml

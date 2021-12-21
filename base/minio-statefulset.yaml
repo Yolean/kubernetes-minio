@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: minio
-        image: docker.io/minio/minio:RELEASE.2021-07-30T00-02-00Z@sha256:552e1b5f97878dcd8aae0df1d0a8dcd15a935124bfcbc92041ec31c9b24c898d
+        image: docker.io/minio/minio:RELEASE.2021-12-20T22-07-16Z
         args:
         - server
         env:

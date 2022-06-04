@@ -16,14 +16,10 @@ spec:
       labels:
         app: minio
         v1beta1.min.io/instance: minio
-      annotations:
-        prometheus.io/path: /minio/prometheus/metrics
-        prometheus.io/port: "9000"
-        prometheus.io/scrape: "true"
     spec:
       containers:
       - name: minio
-        image: docker.io/minio/minio:RELEASE.2022-01-03T18-22-58Z
+        image: docker.io/minio/minio:RELEASE.2022-06-03T01-40-53Z
         args:
         - server
         env:
@@ -56,6 +52,7 @@ spec:
             port: 9000
           initialDelaySeconds: 30
           periodSeconds: 20
+          successThreshold: 2
         resources:
           requests:
             cpu: 10m

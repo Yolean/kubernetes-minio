@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mc
-        image: docker.io/minio/mc:RELEASE.2022-05-09T04-08-26Z
+        image: docker.io/minio/mc:RELEASE.2022-06-10T22-29-12Z
         env:
         - name: MINIO_HOST
           value: http://minio:9000

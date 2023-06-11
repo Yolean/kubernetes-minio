@@ -1,6 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+images:
+- name: minio/minio
+  newName: docker.io/minio/minio
+  newTag: RELEASE.2023-06-09T07-32-12Z@sha256:2ff9b6a0705b28ce7bbfb1b09f4e2c4fb9c1832d7f1f147897b8cc4fa0064a96
+
 resources:
 - minio-hl-svc.yaml
 - minio-statefulset.yaml

@@ -4,6 +4,7 @@ on:
   push:
     branches:
     - master
+    - new-start-args-and-user
 
 jobs:
   publish:
@@ -29,18 +30,19 @@ jobs:
     -
       uses: imjasonh/setup-crane@v0.3
     -
-      name: Get minio target image
-      id: imageMinioMirror
+      name: Get current minio tag
+      id: imageMinioTag
       uses: mikefarah/yq@v4.44.1
       with:
-        cmd: yq '.spec.template.spec.containers[0].image' base/minio-statefulset.yaml
+        cmd: yq '.images[0].newTag | sub("(.*)@.*", "${1}")' base/kustomization.yaml
     -
-      name: Get minio official image
-      id: imageMinioFrom
+      name: Get current mc tag
+      id: imageMcTag
       uses: mikefarah/yq@v4.44.1
       with:
-        cmd: echo ${{ steps.imageMinioMirror.outputs.result }} | sed 's|ghcr.io/yolean|docker.io/minio|'
+        cmd: yq '.images[0].newTag | sub("(.*)@.*", "${1}")' bucket-create/kustomization.yaml
     -
       run: |
         crane cp docker.io/minio/minio:RELEASE.2022-01-03T18-22-58Z ghcr.io/yolean/minio:RELEASE.2022-01-03T18-22-58Z
-        crane cp ${{ steps.imageMinioFrom.outputs.result }} ${{ steps.imageMinioMirror.outputs.result }}
+        crane cp docker.io/minio/minio:${{ steps.imageMinioTag.outputs.result }} ghcr.io/yolean/minio:${{ steps.imageMinioTag.outputs.result }}
+        crane cp docker.io/minio/mc:${{ steps.imageMcTag.outputs.result }} ghcr.io/yolean/mc:${{ steps.imageMcTag.outputs.result }}

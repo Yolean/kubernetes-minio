@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio
+spec:
+  replicas: 8 # Note, insert N-1 in the expansion below
+  template:
+    spec:
+      containers:
+      - name: minio
+        args:
+        - server
+        - http://minio-{0...7}.minio-hl-svc.$(POD_NAMESPACE).svc.cluster.local/export
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace

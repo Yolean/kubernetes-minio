@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: minio
-        image: ghcr.io/yolean/minio:RELEASE.2022-06-03T01-40-53Z
+        image: minio/minio
         args:
         - server
         env:
@@ -27,16 +27,16 @@ spec:
           value: public
         - name: MINIO_BROWSER
           value: "off"
-        - name: MINIO_ACCESS_KEY
+        - name: MINIO_ROOT_USER
           valueFrom:
             secretKeyRef:
               name: minio
-              key: accesskey
-        - name: MINIO_SECRET_KEY
+              key: rootuser
+        - name: MINIO_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: minio
-              key: secretkey
+              key: rootpassword
         ports:
         - containerPort: 9000
           protocol: TCP

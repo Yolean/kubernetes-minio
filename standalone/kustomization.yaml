@@ -6,4 +6,5 @@ resources:
 - minio-service.yaml
 
 patchesStrategicMerge:
-- minio-scale1.yaml
+- minio-standalone.yaml
+- auth-default-insecure.yaml

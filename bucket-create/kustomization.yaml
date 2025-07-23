@@ -3,3 +3,8 @@ kind: Kustomization
 
 resources:
 - bucket-create-job.yaml
+
+images:
+- name: minio/mc
+  newName: ghcr.io/yolean/mc
+  newTag: RELEASE.2025-07-16T15-35-03Z@sha256:d5bccfe71e95a34b25d626d86621930342553657e8776833b65ae0bc63cf4928

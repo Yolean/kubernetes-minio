@@ -36,6 +36,13 @@ jobs:
       with:
         cmd: yq '.images[0].newTag | sub("(.*)@.*", "${1}")' base/kustomization.yaml
     -
+      name: Get current mc tag
+      id: imageMcTag
+      uses: mikefarah/yq@v4.44.1
+      with:
+        cmd: yq '.images[0].newTag | sub("(.*)@.*", "${1}")' bucket-create/kustomization.yaml
+    -
       run: |
         crane cp docker.io/minio/minio:RELEASE.2022-01-03T18-22-58Z ghcr.io/yolean/minio:RELEASE.2022-01-03T18-22-58Z
         crane cp docker.io/minio/minio:${{ steps.imageMinioTag.outputs.result }} ghcr.io/yolean/minio:${{ steps.imageMinioTag.outputs.result }}
+        crane cp docker.io/minio/mc:${{ steps.imageMcTag.outputs.result }} ghcr.io/yolean/mc:${{ steps.imageMcTag.outputs.result }}
